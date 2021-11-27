@@ -25,6 +25,16 @@ func wildCardHandler(c *fiber.Ctx) error {
 	return nil
 }
 
+func optionalParameterHandler(c *fiber.Ctx) error {
+	todoId := c.Params("todoId")
+	if todoId != "" {
+		c.SendString("Show TODO Id : " + todoId)
+	} else {
+		c.SendString("Show all TODOs")
+	}
+	return nil
+}
+
 func main() {
 	app := fiber.New()
 
@@ -36,6 +46,10 @@ func main() {
 
 	// Open : http://localhost:3000/wildcard/any/parameter/type
 	app.Get("/wildcard/*", wildCardHandler)
+
+	// Open : http://localhost:3000/todos/
+	// Open : http://localhost:3000/todos/1
+	app.Get("/todos/:todoId?", optionalParameterHandler)
 
 	err := app.Listen(":3000")
 	if err != nil {
