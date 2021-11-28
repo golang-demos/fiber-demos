@@ -12,7 +12,7 @@ func apiGroupHandler(c *fiber.Ctx) error {
 	if accessToken != "" { // Do not allow if Access Token is not set in cookie
 		return c.Next()
 	} else {
-		log.Println("Access token is missing")
+		log.Println("Access token is missing. You need to set a cookie with name \"Access-Token\"")
 	}
 	return nil
 }
